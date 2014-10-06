@@ -1,0 +1,13 @@
+<div class="page-header">
+    <h1>Your <small>tasks</small></h1>
+</div>
+
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="task in tasks | orderBy:'creationTime'">
+        <span class="label" ng-class="statusStyles(task.status)">{{task.status | lowercase}}</span>
+        <a ng-href="#tasks/{{task.id}}">{{task.name}}</a>
+        <span class="badge">
+            <span class="glyphicon glyphicon-comment"></span> {{task.commentCount}}
+        </span>
+    </li>
+</ul>

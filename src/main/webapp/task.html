@@ -1,0 +1,104 @@
+<div class="panel panel-default center-block animated delete-block" ng-show="sureDelete">
+    <div class="panel-body">
+        <p class="text-center">Do you want to delete the task?</p>
+        <div class="text-center">
+            <button class="btn btn-sm btn-default" ng-click="sureDelete = false">Cancel</button>
+            <button class="btn btn-sm btn-danger" ng-click="deleteTask(task)">Delete</button>
+        </div>
+    </div>
+</div>
+
+<ol class="breadcrumb">
+    <li><a href="#projects">Projects</a></li>
+    <li><a ng-href="#projects/{{task.projectId}}">{{task.projectName}}</a></li>
+    <li class="active">{{task.name}}</li>
+</ol>
+
+<div class="page-header">
+    <h1>{{task.name}} <small>task</small></h1>
+    <div>
+        <span class="label label-default"><span class="glyphicon glyphicon-calendar"></span> {{task.creationTime | date:"yyyy-MM-dd HH:mm"}}</span>
+        <span class="label label-default"><span class="glyphicon glyphicon-user"></span> {{task.creatorName}}</span>
+        <span class="label" ng-class="statusStyles(task.status)">{{task.status | lowercase}}</span>
+        <span class="label label-default" ng-if="task.developerName"><span class="glyphicon glyphicon-cog"></span> {{task.developerName}}</span>
+        <div class="btn-group" ng-if="user.role == 'Manager'">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" ng-click="loadDevelopers()">
+                Developer <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="developer in developers"><a ng-click="assignDeveloper(developer)">{{developer.name}}</a></li>
+            </ul>
+        </div>
+        <div class="btn-group" ng-if="user.id == task.developerId">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                Status <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="status in statuses"><a ng-click="changeStatus(status)">{{status | lowercase}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<p class="text-justify">
+    {{task.description}}
+</p>
+
+<div class="page-header">
+    <h4>Comments</h4>
+</div>
+
+<div class="panel panel-default comment" ng-repeat="comment in project.comments | orderBy:'creationTime'">
+    <div class="panel-body">
+        <div class="user-info pull-left">
+            <div class="img-thumbnail user-icon"><span class="glyphicon glyphicon-user"></span></div>
+            <p class="user-name"><b>{{comment.userName}}</b></p>
+            <small>{{comment.creationTime | date:"yyyy-MM-dd HH:mm"}}</small>
+        </div>
+        <div class="pull-right" ng-if="user.id == comment.userId && (comment.edit == undefined || comment.edit == false)">
+            <span><a ng-click="comment.edit = true"><small>edit</small></a></span>
+            <span><a ng-click="removeComment(comment)"><small>remove</small></a></span>
+        </div>
+        <div class="pull-right" ng-if="user.id == comment.userId && comment.edit == true">
+            <span><a ng-click="saveComment(comment)"><small>save</small></a></span>
+        </div>
+        <div ng-if="comment.edit == undefined || comment.edit == false">
+            {{comment.text}}
+        </div>
+        <div ng-if="comment.edit == true">
+            <textarea class="form-control" cols="40" rows="3" style="width: inherit" ng-model="comment.text"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default comment" ng-repeat="comment in task.comments | orderBy:'creationTime'">
+    <div class="panel-body">
+        <div class="user-info pull-left">
+            <div class="img-thumbnail user-icon"><span class="glyphicon glyphicon-user"></span></div>
+            <p class="user-name"><b>{{comment.userName}}</b></p>
+            <small>{{comment.creationTime | date:"yyyy-MM-dd HH:mm"}}</small>
+        </div>
+        <div class="pull-right" ng-if="user.id == comment.userId && (comment.edit == undefined || comment.edit == false)">
+            <span><a ng-click="editComment(comment)"><small>edit</small></a></span>
+            <span><a ng-click="removeComment(comment)"><small>remove</small></a></span>
+        </div>
+        <div class="pull-right" ng-if="user.id == comment.userId && comment.edit == true">
+            <span><a ng-click="cancelEditComment(comment)"><small>cancel</small></a></span>
+            <span><a ng-click="saveComment(comment)"><small>save</small></a></span>
+        </div>
+        <div ng-if="comment.edit == undefined || comment.edit == false">
+            {{comment.text}}
+        </div>
+        <div ng-if="comment.edit == true">
+            <textarea class="form-control" cols="40" rows="3" style="width: inherit" ng-model="comment.text"></textarea>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-if="errorSendComment">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <strong>Error send comment!</strong> Check your connection!
+    </div>
+    <div><textarea class="form-control" ng-model="comment.text"></textarea></div>
+    <button class="btn btn-default pull-right" style="margin-bottom: 10px; margin-top: 10px" ng-click="createComment(task.id, comment)">Comment</button>
+</div>

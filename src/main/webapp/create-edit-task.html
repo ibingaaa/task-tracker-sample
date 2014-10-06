@@ -1,0 +1,25 @@
+<div class="panel panel-default center-block create-block">
+    <div class="panel-body">
+        <div class="page-header text-center">
+            <h1>{{action}} task</h1>
+        </div>
+        <form role="form" ng-submit="saveTask(task)">
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="errorSaveTask">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error save task!</strong> Check your connection!
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control" autofocus required ng-model="task.name" maxlength="100">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskDescription">Description</label>
+                <textarea id="taskDescription" class="form-control" required ng-model="task.description"></textarea>
+            </div>
+            <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary pull-right" type="submit">Save</button>
+        </form>
+    </div>
+</div>

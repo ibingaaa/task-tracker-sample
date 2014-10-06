@@ -1,0 +1,82 @@
+<div class="panel panel-default center-block login" ng-hide="register">
+    <div class="panel-body">
+        <form role="form" ng-submit="login()">
+            <div class="form-group">
+                <div class="alert alert-danger alert-dismissible" role="alert" ng-if="loginFailure">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <strong>Incorrect</strong> login or password!
+                </div>
+                <div class="alert alert-success alert-dismissible" role="alert" ng-if="userCreated">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <strong>Success!</strong> User created!
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Login</span>
+                    <input type="text" class="form-control" autofocus required ng-model="cred.login" maxlength="100">
+                </div>
+                <p class="help-block">Demo logins: man or dev</p>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Password</span>
+                    <input type="password" class="form-control" required ng-model="cred.password">
+                </div>
+                <p class="help-block">Demo passwords: manpass or devpass</p>
+            </div>
+            <button class="btn btn-default" type="button" ng-click="register = true">Register</button>
+            <button class="btn btn-primary pull-right" type="submit">Sign in</button>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default center-block login" ng-show="register">
+    <div class="panel-body">
+        <form role="form" ng-submit="createUser()">
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="userExist">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error!</strong> User with this <strong>login</strong> has been exist!
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="errorCreateUser">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error create user!</strong> Check your connection!
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Login</span>
+                    <input type="text" class="form-control" autofocus required ng-model="cred.login" max="100">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control" required ng-model="cred.name" max="150">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Password</span>
+                    <input type="password" class="form-control" required ng-model="cred.password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Re-type</span>
+                    <input type="password" class="form-control" required ng-model="retype">
+                </div>
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="passNotMatch">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Passwords</strong> don't match!
+            </div>
+            <div class="form-group">
+                <label for="roleSelect">Role</label>
+                <select class="form-control" id="roleSelect" ng-model="cred.role" required>
+                    <option selected value="Manager">Manager</option>
+                    <option value="Developer">Developer</option>
+                </select>
+            </div>
+            <button class="btn btn-default" type="button" ng-click="register = false">Cancel</button>
+            <button class="btn btn-primary pull-right" type="submit">Sign up</button>
+        </form>
+    </div>
+</div>

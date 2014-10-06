@@ -1,0 +1,22 @@
+<div class="panel panel-default" ng-repeat="project in projects">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a ng-href="#projects/{{project.id}}">{{project.name}}</a>
+                <span class="badge pull-right">
+                    <span class="glyphicon glyphicon-cog"></span> {{project.taskCount}}
+                    &nbsp;
+                    <span class="glyphicon glyphicon-comment"></span> {{project.commentCount}}
+                </span>
+        </h3>
+    </div>
+    <div class="panel-body text-justify">
+        {{project.description}}
+        <hr>
+        <div>
+            <span class="label label-default"><span class="glyphicon glyphicon-calendar"></span> {{project.creationTime | date:"yyyy-MM-dd HH:mm "}}</span>
+            &nbsp;
+            <span class="label label-default"><span class="glyphicon glyphicon-user"></span> {{project.creatorName}}</span>
+            <a ng-href="#projects/{{project.id}}" class="btn btn-xs btn-primary pull-right">More</a>
+        </div>
+    </div>
+</div>

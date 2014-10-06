@@ -1,0 +1,33 @@
+<div class="panel panel-default center-block create-block">
+    <div class="panel-body">
+        <div class="page-header text-center">
+            <h1>{{action}} project</h1>
+        </div>
+        <form role="form" ng-submit="saveProject(project)">
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="projectExist">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error!</strong> Project with this <strong>name has been exist</strong>!
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" ng-if="errorCreateProject || errorSaveProject">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error {{action | lowercase}} project!</strong> Check your connection!
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control" autofocus required ng-model="project.name" maxlength="100">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" class="form-control" required ng-model="project.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="projectText">Text</label>
+                <textarea id="projectText" class="form-control" required ng-model="project.text"></textarea>
+            </div>
+            <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary pull-right" type="submit">Save</button>
+        </form>
+    </div>
+</div>
